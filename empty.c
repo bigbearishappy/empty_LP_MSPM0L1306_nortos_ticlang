@@ -57,6 +57,7 @@ typedef enum {
 struct bootmode_pins {
     GPIO_Regs* pin_port;
     uint32_t pin_num;
+    uint32_t pin_iomux;
 };
 typedef struct bootmode_pins BootMode_Pins;
 
@@ -75,22 +76,22 @@ typedef struct i2c_slave_data I2C_Slave_Data;
 uint16_t bootmode = 0x0000;
 
 BootMode_Pins bootmode_buf[] = {
-    {0, 0},
-    {0, 0},
-    {0, 0},
-    {BOOTMODE_PORT, BOOTMODE_BOOTMODE3_PIN},
-    {BOOTMODE_PORT, BOOTMODE_BOOTMODE4_PIN},
-    {BOOTMODE_PORT, BOOTMODE_BOOTMODE5_PIN},
-    {BOOTMODE_PORT, BOOTMODE_BOOTMODE6_PIN},
-    {BOOTMODE_PORT, BOOTMODE_BOOTMODE7_PIN},
-    {BOOTMODE_PORT, BOOTMODE_BOOTMODE8_PIN},
-    {BOOTMODE_PORT, BOOTMODE_BOOTMODE9_PIN},
-    {BOOTMODE_PORT, BOOTMODE_BOOTMODE10_PIN},
-    {BOOTMODE_PORT, BOOTMODE_BOOTMODE11_PIN},
-    {0, 0},
-    {0, 0},
-    {BOOTMODE_PORT, BOOTMODE_BOOTMODE14_PIN},
-    {0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {BOOTMODE_PORT, BOOTMODE_BOOTMODE3_PIN, BOOTMODE_BOOTMODE3_IOMUX},
+    {BOOTMODE_PORT, BOOTMODE_BOOTMODE4_PIN, BOOTMODE_BOOTMODE4_IOMUX},
+    {BOOTMODE_PORT, BOOTMODE_BOOTMODE5_PIN, BOOTMODE_BOOTMODE5_IOMUX},
+    {BOOTMODE_PORT, BOOTMODE_BOOTMODE6_PIN, BOOTMODE_BOOTMODE6_IOMUX},
+    {BOOTMODE_PORT, BOOTMODE_BOOTMODE7_PIN, BOOTMODE_BOOTMODE7_IOMUX},
+    {BOOTMODE_PORT, BOOTMODE_BOOTMODE8_PIN, BOOTMODE_BOOTMODE8_IOMUX},
+    {BOOTMODE_PORT, BOOTMODE_BOOTMODE9_PIN, BOOTMODE_BOOTMODE9_IOMUX},
+    {BOOTMODE_PORT, BOOTMODE_BOOTMODE10_PIN, BOOTMODE_BOOTMODE10_IOMUX},
+    {BOOTMODE_PORT, BOOTMODE_BOOTMODE11_PIN, BOOTMODE_BOOTMODE11_IOMUX},
+    {0, 0, 0},
+    {0, 0, 0},
+    {BOOTMODE_PORT, BOOTMODE_BOOTMODE14_PIN, BOOTMODE_BOOTMODE14_IOMUX},
+    {0, 0, 0},
 };
 
 I2C_Slave_Data i2c_slave;
@@ -161,6 +162,13 @@ int main(void)
 
     /*Delay for the AM62 to detect the bootmode*/
     delay_cycles(16000000);
+
+    /* Release the bootmode pins for linux kernel*/
+    for (int i = 0; i < 16; ++i) {
+        if(bootmode_buf[i].pin_port != 0) {
+            DL_GPIO_enableHiZ(bootmode_buf[i].pin_iomux);
+        }
+    }
 
     /* Start ADC convert*/
     DL_ADC12_startConversion(ADC12_0_INST);
