@@ -1,0 +1,135 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "MSPM0L130X" --package "VQFN-32(RHB)" --part "Default" --product "mspm0_sdk@1.20.01.06"
+ * @versions {"tool":"1.18.0+3246"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const ADC12         = scripting.addModule("/ti/driverlib/ADC12", {}, false);
+const ADC121        = ADC12.addInstance();
+const Board         = scripting.addModule("/ti/driverlib/Board");
+const GPIO          = scripting.addModule("/ti/driverlib/GPIO", {}, false);
+const GPIO1         = GPIO.addInstance();
+const GPIO2         = GPIO.addInstance();
+const GPIO3         = GPIO.addInstance();
+const I2C           = scripting.addModule("/ti/driverlib/I2C", {}, false);
+const I2C1          = I2C.addInstance();
+const SYSCTL        = scripting.addModule("/ti/driverlib/SYSCTL");
+const TIMER         = scripting.addModule("/ti/driverlib/TIMER", {}, false);
+const TIMER1        = TIMER.addInstance();
+const WWDT          = scripting.addModule("/ti/driverlib/WWDT", {}, false);
+const WWDT1         = WWDT.addInstance();
+const ProjectConfig = scripting.addModule("/ti/project_config/ProjectConfig");
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+ADC121.$name                 = "ADC12_0";
+ADC121.enableDMA             = false;
+ADC121.sampClkSrc            = "DL_ADC12_CLOCK_ULPCLK";
+ADC121.repeatMode            = true;
+ADC121.enabledInterrupts     = ["DL_ADC12_INTERRUPT_MEM0_RESULT_LOADED"];
+ADC121.sampleTime0           = "62.5ns";
+ADC121.adcMem2chansel        = "DL_ADC12_INPUT_CHAN_2";
+ADC121.samplingOperationMode = "sequence";
+ADC121.endAdd                = 3;
+ADC121.startAdd              = 2;
+ADC121.adcMem3chansel        = "DL_ADC12_INPUT_CHAN_3";
+ADC121.adcPin2Config.$name   = "ti_driverlib_gpio_GPIOPinGeneric3";
+ADC121.adcPin3Config.$name   = "ti_driverlib_gpio_GPIOPinGeneric2";
+
+
+GPIO1.$name                         = "BOOT_SEL";
+GPIO1.port                          = "PORTA";
+GPIO1.associatedPins.create(2);
+GPIO1.associatedPins[0].$name       = "BOOT_SEL0";
+GPIO1.associatedPins[0].direction   = "INPUT";
+GPIO1.associatedPins[0].assignedPin = "21";
+GPIO1.associatedPins[1].$name       = "BOOT_SEL1";
+GPIO1.associatedPins[1].direction   = "INPUT";
+GPIO1.associatedPins[1].assignedPin = "26";
+
+GPIO2.$name                         = "BOOTMODE";
+GPIO2.associatedPins.create(10);
+GPIO2.associatedPins[0].$name       = "BOOTMODE3";
+GPIO2.associatedPins[0].assignedPin = "3";
+GPIO2.associatedPins[1].$name       = "BOOTMODE4";
+GPIO2.associatedPins[1].assignedPin = "4";
+GPIO2.associatedPins[2].$name       = "BOOTMODE5";
+GPIO2.associatedPins[2].assignedPin = "9";
+GPIO2.associatedPins[3].assignedPin = "10";
+GPIO2.associatedPins[3].$name       = "BOOTMODE6";
+GPIO2.associatedPins[4].$name       = "BOOTMODE7";
+GPIO2.associatedPins[4].assignedPin = "11";
+GPIO2.associatedPins[5].$name       = "BOOTMODE8";
+GPIO2.associatedPins[5].assignedPin = "15";
+GPIO2.associatedPins[6].$name       = "BOOTMODE9";
+GPIO2.associatedPins[6].assignedPin = "16";
+GPIO2.associatedPins[7].$name       = "BOOTMODE10";
+GPIO2.associatedPins[7].assignedPin = "23";
+GPIO2.associatedPins[8].$name       = "BOOTMODE11";
+GPIO2.associatedPins[8].assignedPin = "22";
+GPIO2.associatedPins[9].$name       = "BOOTMODE14";
+GPIO2.associatedPins[9].assignedPin = "18";
+
+GPIO3.port                          = "PORTA";
+GPIO3.$name                         = "SOC_ENABLE";
+GPIO3.associatedPins[0].$name       = "SOC_EN";
+GPIO3.associatedPins[0].assignedPin = "17";
+
+I2C1.$name                     = "I2C_0";
+I2C1.basicControllerBusSpeed   = 400000;
+I2C1.basicEnableTarget         = true;
+I2C1.advAnalogGlitchFilter     = "DISABLED";
+I2C1.advTargetTXEmptyEn        = true;
+I2C1.advTargetTXFIFOTRIG       = "BYTES_1";
+I2C1.basicTargetAddress        = 0x13;
+I2C1.intTarget                 = ["RXFIFO_TRIGGER","RX_DONE","START","STOP"];
+I2C1.peripheral.$assign        = "I2C0";
+I2C1.peripheral.sdaPin.$assign = "PA0";
+I2C1.peripheral.sclPin.$assign = "PA1";
+I2C1.sdaPinConfig.$name        = "ti_driverlib_gpio_GPIOPinGeneric4";
+I2C1.sclPinConfig.$name        = "ti_driverlib_gpio_GPIOPinGeneric5";
+
+
+TIMER1.$name       = "TIMER_0";
+TIMER1.timerPeriod = "300 ms";
+TIMER1.timerClkSrc = "LFCLK";
+TIMER1.timerMode   = "PERIODIC";
+TIMER1.interrupts  = ["ZERO"];
+
+WWDT1.$name               = "WWDT0";
+WWDT1.window0ClosedPeriod = "25";
+
+ProjectConfig.switchCondition = true;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+ADC121.peripheral.$suggestSolution           = "ADC0";
+ADC121.peripheral.adcPin2.$suggestSolution   = "PA25";
+ADC121.peripheral.adcPin3.$suggestSolution   = "PA24/OPA0.IN0-";
+Board.peripheral.$suggestSolution            = "DEBUGSS";
+Board.peripheral.swclkPin.$suggestSolution   = "PA20";
+Board.peripheral.swdioPin.$suggestSolution   = "PA19";
+GPIO1.associatedPins[0].pin.$suggestSolution = "PA21";
+GPIO1.associatedPins[1].pin.$suggestSolution = "PA26";
+GPIO2.associatedPins[0].pin.$suggestSolution = "PA3";
+GPIO2.associatedPins[1].pin.$suggestSolution = "PA4";
+GPIO2.associatedPins[2].pin.$suggestSolution = "PA9";
+GPIO2.associatedPins[3].pin.$suggestSolution = "PA10";
+GPIO2.associatedPins[4].pin.$suggestSolution = "PA11";
+GPIO2.associatedPins[5].pin.$suggestSolution = "PA15";
+GPIO2.associatedPins[6].pin.$suggestSolution = "PA16";
+GPIO2.associatedPins[7].pin.$suggestSolution = "PA23";
+GPIO2.associatedPins[8].pin.$suggestSolution = "PA22";
+GPIO2.associatedPins[9].pin.$suggestSolution = "PA18";
+GPIO3.associatedPins[0].pin.$suggestSolution = "PA17/OPA1.IN0-";
+SYSCTL.peripheral.$suggestSolution           = "SYSCTL";
+TIMER1.peripheral.$suggestSolution           = "TIMG0";
+WWDT1.peripheral.$suggestSolution            = "WWDT0";
