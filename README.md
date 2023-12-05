@@ -1,8 +1,7 @@
-## Example Summary
+## Summary
 
 Empty project using DriverLib.
-This example shows a basic empty project using DriverLib with just main file
-and SysConfig initialization.
+This project control the bootmode of AM62 and provide the ADC value to soc via i2c.
 
 ## Peripherals & Pin Assignments
 
@@ -11,31 +10,57 @@ and SysConfig initialization.
 | SYSCTL |  |  |
 | DEBUGSS | PA20 | Debug Clock |
 | DEBUGSS | PA19 | Debug Data In Out |
+| I2C | PA0 | I2C slave data |
+| I2C | PA1 | I2C slave clk |
+| BOOTMODE3 | PA3 | bootmode pin3 |
+| BOOTMODE4 | PA4 | bootmode pin4 |
+| BOOTMODE5 | PA9 | bootmode pin5 |
+| BOOTMODE6 | PA10 | bootmode pin6 |
+| BOOTMODE7 | PA11 | bootmode pin7 |
+| BOOTMODE8 | PA15 | bootmode pin8 |
+| BOOTMODE9 | PA16 | bootmode pin9 |
+| SOC_EN| PA17 | enable pin for soc/BSL_invoke|
+| BOOTMODE14 | PA18 | bootmode pin14|
+| SWDIO | PA19 | SWDIO |
+| SWCLK | PA20 | SWCLK|
+| BOOT_SEL0 | PA21 | bootmode select pin0 |
+| BOOTMODE11 | PA22 | bootmode pin11 |
+| BOOTMODE10 | PA23 | bootmode pin10 |
+| ADC1 | PA24 | adc channel1 |
+| ADC0 | PA25 | adc channel0 |
+| BOOT_SEL1 | PA26 | bootmode select pin1 |
 
-## BoosterPacks, Board Resources & Jumper Settings
+## Usage
+### Get firmware version
+```
+i2ctransfer -y 1 w1@0x13 0x00 r2
+```
+### example output(version 0.1)
+```
+0x00 0x01
 
-Visit [LP_MSPM0L1306](https://www.ti.com/tool/LP-MSPM0L1306) for LaunchPad information, including user guide and hardware files.
+```
+### Enter BSL mode
+```
+i2ctransfer -y 1 w1@0x13 0x01 r2
+```
+### Get ADC value
+```
+i2ctransfer -y 1 w2@0x13 0x02 0x00 r2
+i2ctransfer -y 1 w2@0x13 0x02 0x01 r2
+```
+### example output(ADC0:0x00cb ADC1:0x00cf)
+```
+0x00 0xcb
+0x00 0xcf
 
-| Pin | Peripheral | Function | LaunchPad Pin | LaunchPad Settings |
-| --- | --- | --- | --- | --- |
-| PA20 | DEBUGSS | SWCLK | J2_13 | <ul><li>PA20 is used by SWD during debugging<br><ul><li>`J101 15:16 ON` Connect to XDS-110 SWCLK while debugging<br><li>`J101 15:16 OFF` Disconnect from XDS-110 SWCLK if using pin in application</ul></ul> |
-| PA19 | DEBUGSS | SWDIO | J2_17 | <ul><li>PA19 is used by SWD during debugging<br><ul><li>`J101 13:14 ON` Connect to XDS-110 SWDIO while debugging<br><li>`J101 13:14 OFF` Disconnect from XDS-110 SWDIO if using pin in application</ul></ul> |
+```
+### Get bootmode data
+```
+i2ctransfer -y 1 w1@0x13 0x03 r2
+```
+### example output(bootmode:0xb623)
+```
+0xb6 0x23
 
-### Device Migration Recommendations
-This project was developed for a superset device included in the LP_MSPM0L1306 LaunchPad. Please
-visit the [CCS User's Guide](https://software-dl.ti.com/msp430/esd/MSPM0-SDK/latest/docs/english/tools/ccs_ide_guide/doc_guide/doc_guide-srcs/ccs_ide_guide.html#sysconfig-project-migration)
-for information about migrating to other MSPM0 devices.
-
-### Low-Power Recommendations
-TI recommends to terminate unused pins by setting the corresponding functions to
-GPIO and configure the pins to output low or input with internal
-pullup/pulldown resistor.
-
-SysConfig allows developers to easily configure unused pins by selecting **Board**→**Configure Unused Pins**.
-
-For more information about jumper configuration to achieve low-power using the
-MSPM0 LaunchPad, please visit the [LP-MSPM0L1306 User's Guide](https://www.ti.com/lit/slau869).
-
-## Example Usage
-
-Compile, load and run the example.
+```
