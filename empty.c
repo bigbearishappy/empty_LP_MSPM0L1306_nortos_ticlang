@@ -161,7 +161,7 @@ int main(void)
     DL_GPIO_setPins(SOC_ENABLE_PORT, SOC_ENABLE_SOC_EN_PIN);
 
     /*Delay for the AM62 to detect the bootmode*/
-    delay_cycles(16000000);
+    delay_cycles(32000000);
 
     /* Release the bootmode pins for linux kernel*/
     for (int i = 0; i < 16; ++i) {
