@@ -78,6 +78,7 @@
                             </tool>
                             <tool id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.hex.81365360" name="Arm Hex Utility" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.hex">
                                 <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.hex.TOOL_ENABLE.1383950058" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.hex.TOOL_ENABLE" value="true" valueType="boolean"/>
+                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.hex.OUTPUT_FORMAT.1564184859" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.hex.OUTPUT_FORMAT" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.hex.OUTPUT_FORMAT.TI_TXT" valueType="enumerated"/>
                                 <outputType id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.hex.outputType__BIN.860355227" name="Binary File" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.hex.outputType__BIN"/>
                             </tool>
                             <tool id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.objcopy.845906472" name="Arm Objcopy Utility" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.objcopy"/>
