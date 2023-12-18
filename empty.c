@@ -120,25 +120,25 @@ int main(void)
 
     /*
     bootsel0:bootsel1(default 1:1)
-    1:1 -> eMMC
-    1:0 -> SD Card
-    0:1 -> xSPI
     0:0 -> Ethernet
+    0:1 -> SD Card 
+    1:0 -> xSPI
+    1:1 -> eMMC
     */
-    switch((bootsel1 << 4) + bootsel0)
+    switch((bootsel0 << 4) + bootsel1)
     {
-        case 0x11:  //1:1 -> eMMC
-            bootmode = 0xb64b;
+        case 0x00:  //0:0 -> Ethernet
+            bootmode = 0xb623;
         break;
-        case 0x10:  //1:0 -> SD Card
+        case 0x01:  //0:1 -> SD Card
             bootmode = 0xb643;
         break;
-        case 0x01:  //0:1 -> xSPI
+        case 0x10:  //1:0 -> xSPI
             /* read the current xSPI boot data here if needed*/
             bootmode = 0xb673;
         break;
-        case 0x00:  //0:0 -> Ethernet
-            bootmode = 0xb623;
+        case 0x11:  //1:1 -> eMMC
+            bootmode = 0xb64b;
         break;
         default:
         break;
