@@ -107,6 +107,10 @@ int main(void)
     NVIC_EnableIRQ(TIMER_0_INST_INT_IRQN); 
     DL_TimerG_startCounter(TIMER_0_INST);
 
+    /* Put SOC chip into reset mode before the bootmode pins is ready */
+    DL_GPIO_clearPins(SOC_ENABLE_PORT, SOC_ENABLE_SOC_EN_PIN);
+    delay_cycles(3200000);
+
     DL_GPIO_initDigitalInputFeatures(BOOT_SEL_BOOT_SEL0_IOMUX,
 		 DL_GPIO_INVERSION_DISABLE, DL_GPIO_RESISTOR_PULL_UP,
 		 DL_GPIO_HYSTERESIS_DISABLE, DL_GPIO_WAKEUP_DISABLE);
