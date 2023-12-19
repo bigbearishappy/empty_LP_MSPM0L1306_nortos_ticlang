@@ -138,9 +138,8 @@ int main(void)
             bootmode = 0xb643;
         break;
         case 0x10:  //1:0 -> xSPI
-	    /* For AM62 soc, we only can boot it from 
-	     * OSPI flash with serial NAND mode */
-            bootmode = 0xb603;
+            /* read the current xSPI boot data here if needed*/
+            bootmode = 0xb673;
         break;
         case 0x11:  //1:1 -> eMMC
             bootmode = 0xb64b;
