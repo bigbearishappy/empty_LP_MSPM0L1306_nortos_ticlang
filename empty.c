@@ -35,7 +35,7 @@
 #include <string.h>
 
 #define MAIN_VER 0
-#define SUB_VER 1
+#define SUB_VER 2
 
 typedef enum {
     /* Get the firmware version*/
